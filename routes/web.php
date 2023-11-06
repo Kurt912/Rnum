@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\RandomNumberGeneration;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('rnum');
 });
+
+Route::post('storeTransaction', [TransactionController::class, 'storeTransaction'])->name('storeTransaction');
+Route::get('generateRandomNum/{length}', [RandomNumberGeneration::class, 'getRandomNum'])->name('generateRandomNum/{length}');

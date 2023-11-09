@@ -25,12 +25,22 @@ body {
     padding: 10px 15px;
     background-color: black;
 }
+#collected-digits-container{
+    padding: 0px;
+    margin: 0px;    
+    text-align: center;
+    background: linear-gradient(to right, rgb(0, 174, 255) 0%, yellow 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 35px;
+    width: 380px;
+}
 #random-digits-container
 {
     padding: 0px;
     margin: 0px;    
     text-align: center;
-    background: linear-gradient(to right, rgb(255, 0, 255) 0%, yellow 100%);
+    background: linear-gradient(to right, rgb(0, 174, 255) 0%, yellow 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 35px;
@@ -40,7 +50,7 @@ body {
     padding: 0px;
     margin: 0px;    
     text-align: center;
-    background: linear-gradient(to right, rgb(255, 0, 255) 0%, yellow 100%);
+    background: linear-gradient(to right, rgb(0, 174, 255) 0%, yellow 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 55px;
@@ -51,25 +61,15 @@ body {
     padding: 10px 0px;
 }
 
-.buttons{
-    background: linear-gradient(to right, rgb(255, 0, 255) 0%, yellow 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+#startButton{
+    background: linear-gradient(to right, rgb(0, 174, 255) 0%, yellow 100%);
+    /* -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
     display: inline-block;
     padding: 5px;
 }
 
-#resume{
-    display: none;
-}
 
-#pause{
-    display: none;
-}
-
-#restart{
-    display: none;
-}
 
 .buttons{
     font-size: 40px;
@@ -92,7 +92,7 @@ body {
 }
 
 #clockBox{
-    background: linear-gradient(to right, rgb(255, 0, 255) 0%, yellow 100%);
+    background: linear-gradient(to right, rgb(0, 174, 255) 0%, yellow 100%);
     padding: 3px;
 }
 
@@ -105,7 +105,7 @@ body {
     padding: 0px;
     margin: 0px;    
     text-align: center;
-    background: linear-gradient(to right, rgb(255, 0, 255) 0%, yellow 100%);
+    background: linear-gradient(to right, rgb(0, 174, 255) 0%, yellow 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 45px;
@@ -116,7 +116,7 @@ body {
 }
 
 .buttons{
-    background: linear-gradient(to right, rgb(255, 0, 255) 0%, yellow 100%);
+    background: linear-gradient(to right, rgb(0, 174, 255) 0%, yellow 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;

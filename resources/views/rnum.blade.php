@@ -12,6 +12,14 @@
 
     <link rel="stylesheet" href="{{ asset('css/rnum.css') }}">
 
+
+    <!-- SweetAlert2 CSS file -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JavaScript file -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.3/dist/sweetalert2.all.min.js"></script>
+
+
 </head>
 
 {{-- <body>
@@ -46,24 +54,32 @@
             </div>
         </div>
         <div id="buttonBox"> </div>
-        <button type="button" id="startButton">Start timer</button>
+        <button type="button" id="startButton">Start Timer</button>
+        <br>
+        <div id="clockBox">
+            <h1 style="text-align:center;">Your number</h1>
+            <div id="clock">
+                <div class="contents" id="collected-digits-container">- </div>
+            </div>
+        </div>
     </div>
 </body>
 <script>
-    // Get the button element by its ID
+   
     var startButton = document.getElementById("startButton");
 
-    // Get the time element by its ID
+
     var timeElem = document.getElementById("timeElem");
 
-    // Variable to store the timer interval
-
-
-    // Event listener for the button click
+ 
 
     var timer;
 
     startButton.addEventListener("click", function() {
+
+        $('#startButton').text('Restart Timer');
+        $('#collected-digits-container').text('-');
+        timeElem.textContent = "00:00";
         clearInterval(timer);
         var startTime = Date.now();
         storedNum = [];
@@ -82,11 +98,13 @@
             if (elapsedTime % 60 == 0) {
 
                 storeLastDigit();
+                showCollectedDigits();
             }
             console.log(elapsedTime);
             if (elapsedTime == 300) {
                 storeNumberToDatabase()
                 clearInterval(timer);
+                $('#startButton').text('Start Timer');
                 timeElem.textContent = "00:00";
             }
         }, 1000);
@@ -97,6 +115,14 @@
     var countdownDuration = 5;
     var countdownTimer;
 
+
+    function showCollectedDigits() {
+        if (storedNum.length != 0) {
+            $('#collected-digits-container').text(storedNum.join(', '));
+        }
+
+
+    }
 
     function getRandomDigits() {
         var length = 5;
@@ -116,8 +142,6 @@
             }
         });
     }
-
-
 
     function storeLastDigit() {
 
@@ -145,6 +169,11 @@
             },
             dataType: 'json',
             success: function(response) {
+                Swal.fire({
+                    text: 'You transaction number is stored',
+                    icon: 'success',
+
+                });
                 console.log('Transaction stored successfully:', response);
 
             },

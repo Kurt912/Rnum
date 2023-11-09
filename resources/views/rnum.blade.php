@@ -64,28 +64,42 @@
         </div>
     </div>
 </body>
+
+
+
+
 <script>
-   
-    var startButton = document.getElementById("startButton");
-
-
     var timeElem = document.getElementById("timeElem");
+    var startButton = document.getElementById("startButton");
+    var workerCode = `
+    var startTime;
 
- 
+    function startTimer() {
+        startTime = Date.now();
 
-    var timer;
-
-    startButton.addEventListener("click", function() {
-
-        $('#startButton').text('Restart Timer');
-        $('#collected-digits-container').text('-');
-        timeElem.textContent = "00:00";
-        clearInterval(timer);
-        var startTime = Date.now();
-        storedNum = [];
-        timer = setInterval(function() {
+        setInterval(function() {
             var currentTime = Date.now();
             var elapsedTime = Math.floor((currentTime - startTime) / 1000); // in seconds
+
+    
+
+            postMessage(elapsedTime); // Send elapsed time to the main thread
+        }, 1000);
+    }
+
+    startTimer();
+`;
+
+    var blob = new Blob([workerCode], {
+        type: 'application/javascript'
+    });
+    var timerWorker
+
+    function startTimerWorker() {
+
+        timerWorker = new Worker(URL.createObjectURL(blob));
+        timerWorker.onmessage = function(event) {
+            var elapsedTime = event.data;
 
             var minutes = Math.floor(elapsedTime / 60);
             var remainingSeconds = elapsedTime % 60;
@@ -96,19 +110,82 @@
             timeElem.textContent = minutes + ":" + remainingSeconds;
 
             if (elapsedTime % 60 == 0) {
-
                 storeLastDigit();
                 showCollectedDigits();
             }
+
             console.log(elapsedTime);
+
             if (elapsedTime == 300) {
-                storeNumberToDatabase()
-                clearInterval(timer);
+
+                storeNumberToDatabase();
+                timerWorker.terminate();
                 $('#startButton').text('Start Timer');
                 timeElem.textContent = "00:00";
             }
-        }, 1000);
+        };
+
+    }
+
+
+    startButton.addEventListener("click", function() {
+        $('#startButton').text('Restart Timer');
+        $('#collected-digits-container').text('-');
+        timeElem.textContent = "00:00";
+
+        if (timerWorker) {
+
+            timerWorker.terminate();
+        }
+        startTimerWorker()
+
     });
+
+
+    ///////
+
+
+
+
+
+
+
+    // var timer;
+
+    // startButton.addEventListener("click", function() {
+
+    //     $('#startButton').text('Restart Timer');
+    //     $('#collected-digits-container').text('-');
+    //     timeElem.textContent = "00:00";
+    //     clearInterval(timer);
+    //     var startTime = Date.now();
+    //     storedNum = [];
+    //     timer = setInterval(function() {
+    //         var currentTime = Date.now();
+    //         var elapsedTime = Math.floor((currentTime - startTime) / 1000); // in seconds
+
+    //         var minutes = Math.floor(elapsedTime / 60);
+    //         var remainingSeconds = elapsedTime % 60;
+
+    //         minutes = minutes < 10 ? "0" + minutes : minutes;
+    //         remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
+
+    //         timeElem.textContent = minutes + ":" + remainingSeconds;
+
+    //         if (elapsedTime % 60 == 0) {
+
+    //             storeLastDigit();
+    //             showCollectedDigits();
+    //         }
+    //         console.log(elapsedTime);
+    //         if (elapsedTime == 300) {
+    //             storeNumberToDatabase()
+    //             clearInterval(timer);
+    //             $('#startButton').text('Start Timer');
+    //             timeElem.textContent = "00:00";
+    //         }
+    //     }, 1000);
+    // });
 
     //////////////////////////////////////
     var storedNum = [];

@@ -1,0 +1,180 @@
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+
+
+
+html, body {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	background-color: #FC6D6D;
+	overflow: hidden;
+}
+
+body {
+	&:after {
+  	content: "";
+  	position: absolute;
+  	top: 0; 
+		left: 0;
+  	padding-bottom: 50%;
+  	width: 57.7%;
+		background-color:  #343F4F;
+  	transform-origin: 0 0;
+  	transform: rotate(-30deg) skewX(30deg);
+		z-index: 1;
+	}
+	
+	&:before {
+  	content: "";
+  	position: absolute;
+  	top: 100%; 
+		left: 0;
+  	padding-bottom: 50%;
+  	width: 57.7%;
+		background-color:  #343F4F;
+  	transform-origin: 0 0;
+  	transform: rotate(-30deg) skewX(30deg);
+		z-index: 1;
+	}
+}
+
+.card {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 375px;
+	height: 667px;
+	background-color:  #343F4F;
+	overflow: hidden;
+	
+	.card__counter {
+		display: flex;
+		font-family: 'Anonymous Pro', ;
+		font-weight: bold;
+		color: white;
+		
+		.card__counter__num {
+			font-size: 150px;
+			padding: 0 20px;
+			z-index: 15;
+		}
+		
+		span {
+			margin-top: 45px;
+			font-size: 65px;
+			opacity: 1;
+			transition: opacity .3s;
+			z-index: 3;
+		} 
+	}
+	
+	.card__button {
+		position: absolute;
+		bottom: 85px;
+		left: calc(50% - 37.5px);
+		width: 75px;
+		height: 75px;
+		border-radius: 50%;
+		background-color: #FC6D6D;
+		cursor: pointer;
+		z-index: 10;
+
+		
+		&.card__button--triggered {
+			animation: button 3.9s linear;
+			
+			~ .card__counter span {
+				opacity: 0;
+			}
+		}
+	}
+	
+	.card__overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 10;
+		box-shadow: inset 0px 0px 85px 70px  #343F4F;
+	}
+}
+
+
+@keyframes button {
+	4.9% {
+		bottom: -250px;
+		left: calc(50% - 500px);
+		width: 1000px;
+		height: 1000px;
+		border-radius: 50%;
+	}
+	5.1% {
+		bottom: 0;
+		left: calc(50% - 187.5px);
+		width: 375px;
+		height: 667px;
+		border-radius: 0;
+	}
+	80% {
+		bottom: 0;
+		left: calc(50% - 187.5px);
+		width: 375px;
+		height: 0;
+		border-radius: 0;
+		opacity: 1;
+	}
+	
+	85.1% {
+		bottom: 0;
+		left: calc(50% - 187.5px);
+		width: 375px;
+		height: 0;
+		border-radius: 0;
+		visibility: hidden;
+	}
+	
+	85.2% {
+		bottom: 85px;
+		left: 50%;
+		width: 0;
+		height: 0;
+		border-radius: 50%;
+		visibility: hidden;
+	}
+	
+	95% {
+		bottom: 127.5px;
+		left: 50%;
+		width: 0px;
+		height: 0px;
+		border-radius: 50%;
+		visibility: visible;
+	}
+	
+	100% {
+		bottom: 85px;
+		left: calc(50% - 37.5px);
+		width: 75px;
+		height: 75px;
+		border-radius: 50%;
+		visibility: visible;
+	}
+	
+	
+	
+}
+
+.shadow {
+		display: flex;
+		position: absolute;
+		top: 55px;
+		width: 375px;
+		height: 667px;
+		content: '';
+		box-shadow: 0 0 100px 0 black;
+		z-index: 10;
+}
